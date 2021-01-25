@@ -37,6 +37,7 @@
   }
 }
 
+/* ------------------------------------ */
 .App {
 	min-height: 100vh;
 	background-image: url(https://wallpaperaccess.com/full/2629319.png);
@@ -50,6 +51,7 @@
 	margin: 30px;
 	border-radius: 32px;
 	box-shadow: 0 0 16px rgba(0,0,0,.5);
+	transition: all 2s ease-in-out;
 }
 
 
@@ -70,6 +72,8 @@
 	text-align: center;
 	font-size: 3rem;
 	padding: 88px 0;
+	width: 700px;
+	height: 100px;
 }
 
 .CurrentInfo{
@@ -109,6 +113,7 @@
 .division{
 	width: 3px;
 	background-color: rgba(255, 255, 255, 0.7);
+	margin: 0 30px;
 }
 
 .City{
@@ -132,6 +137,25 @@
 	border-radius: 2px;
 }
 
+.City__form{
+	position: relative;
+	margin: 0;
+	padding: 0;
+	margin-top: 80px;
+	text-align: center;
+}
+
+.City__form__input, .City__form__input:focus{
+	background: transparent;
+	color: hsla(0,0%,100%,.7);
+	text-align: center;
+	font-size: 1.5rem;
+	width: 80%;
+	border: none;
+	border-bottom: solid 2px hsla(0,0%,100%,.7);
+	outline: none;
+}
+
 .CurrentBottom{
 	position: absolute;
 	bottom: 0;
@@ -147,6 +171,7 @@
 	padding: 36px 0;
 	background-color: white;
 	flex: 1 1;
+	justify-content: space-evenly;
 	border-bottom-left-radius: 32px;
 	border-bottom-right-radius: 32px;
 }
@@ -166,9 +191,12 @@
 
 .OtherCityButton__temperature, .ForecastList__Item__temperature{
 	font-size: 1.25rem;
-    color: rgba(0,0,0,.5);
+	color: rgba(0,0,0,.5);
 }
-
+.OtherCityButton__icon, .ForecastList__Item__icon{
+	background-color: rgb(197, 193, 193);
+	border-radius: 50%;
+}
 /* -----------bottom other cities---------------- */
 .OtherCity{
 	display: flex;
@@ -181,11 +209,11 @@
 .OtherCityButton{
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: space-around;
 	border: 0;
 	background: transparent;
 	text-align: left;
-	padding: 0;
+	padding: 0.4rem 0;
 	cursor: pointer;
 }
 
@@ -197,9 +225,18 @@
 	font-size: 1rem;
 }
 
+.OtherCityButton__temperature{
+	width: 40px;
+}
 
 .OtherCityButton__icon{
 	margin-left: 1rem;
+	width: 40px;
+	height: 40px;
+}
+
+.OtherCityButton__icon img{
+	width: 100%;
 }
 
 /* -----------bottom forecast weather---------------- */
@@ -219,6 +256,7 @@
 	display: flex;
 	flex-direction: column;
 	text-align: center;
+	padding: 0 0.7rem;
 }
 
 .ForecastList__Item__day{
@@ -228,9 +266,9 @@
 }
 
 .ForecastList__Item__icon{
-	width: 70px;
+	width: 50px;
 }
 
 .ForecastList__Item__temperature{
 	margin-top: 1rem;
-} 
+}

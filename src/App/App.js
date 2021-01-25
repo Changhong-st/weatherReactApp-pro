@@ -1,142 +1,141 @@
 import React, {Component} from 'react';
 // import logo from '../logo.svg';
-import '../App.css';
+import './App.css';
 import Current from './components/Current/Current';
-import WeatherBottom from './components/WeatherBottom/WeatherBottom';
+import WeatherBottom from './components/Bottom/Bottom';
 import getWeather from './api/getWeather';
-
+require('dotenv').config();
 /* hierarchy
-weather
-|-current
-|    |-city
-|    |-weather-info
-|    |-input
-|-forecast
-|    |-title
-|    |-info-list
--other city
-     |-city list
+weather								data
+	|-current							- cityName
+	|    |-city							- current
+	|    |-weather-info						temperature	
+	|    |-input							humidity
+	|-forecast								wind
+	|    |-title							weather	
+	|    |-info-list						icon		
+	-other city								description
+		|-city list						- forecast[0]-[4] (same a current) 	
 */
-
-
-const forecastWeather = [
-	{
-		day : 'MON',
-		icon : '11d',
-		temperature : 9
-	},
-	{
-		day : 'MON',
-		icon : '11d',
-		temperature : 9
-	},
-	{
-		day : 'MON',
-		icon : '11d',
-		temperature : 9
-	},
-	{
-		day : 'MON',
-		icon : '11d',
-		temperature : 9
-	},
-	{
-		day : 'MON',
-		icon : '11d',
-		temperature : 9
-	}
-];
-
-const otherCity = [
-	{
-		city : 'Perth',
-		temperature : 14,
-		icon : '11d'
-	},
-	{
-		city : 'Perth',
-		temperature : 14,
-		icon : '11d'
-	},
-	{
-		city : 'Perth',
-		temperature : 14,
-		icon : '11d'
-	}
-];
-
-
-// icon image:http://openweathermap.org/img/wn/<icon-code>@2x.png
-
-
-
-
-
-// function buildForecast (forecast) {
-// 	const dayList = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
-// 	let forecastList = [];
-// 	let firstDay = new Date.getDay();
-// 	forecastList.push({
-// 		day : new ,
-// 		temperature : 14,
-// 		icon : '11d'
-// 	});
-// }
-
 
 class Weather extends Component {
 	constructor (props) {
 		super(props);
 		this.state ={
-			country : 'au', 
+			country : 'Australia', 
 			city : 'Melbourne',
 			data : null,
 			loading : true,
+			otherCities: []
 		};
+		this.onCityChange = this.onCityChange.bind(this);
+		this.onOtherCitiesClick = this.onOtherCitiesClick.bind(this);
+
 	}
 
-	async requestWeather () {
+	checkInput(inputCity) {
+		const index = this.state.otherCities.findIndex((city) => {
+			return city.cityName.toUpperCase() === inputCity.toUpperCase();
+		});
+		if(index > 0){
+			this.onOtherCitiesClick(this.state.otherCities[index].cityName);
+			console.log('click');
+			return false;
+		}else{
+			return (inputCity.toUpperCase() !== this.state.city.toUpperCase());
+		}
+	}
+
+	async updateCity(inputCity) {
 		this.setState({
 			loading : true
 		});
-		const {country, city} = this.state;
-		const data = await getWeather(country, city);
+		const newData = await getWeather(this.state.country, inputCity);
+		if(newData === undefined) {
+			this.setState({
+				loading : false
+			});
+			return alert('country or city can not found');
+		}
+		const newCity = newData.cityName;
+		const newOtherCities = this.state.otherCities.map((city) => city);
+		newOtherCities.shift();
+		newOtherCities.push(this.state.data);
+		console.log('update');
 		this.setState({
-			data : data,
+			city: newCity,
+			data: newData,
+			otherCities : newOtherCities,
 			loading : false
 		});
 	}
 
-	componentDidMount() {
-		this.requestWeather();
+	onCityChange(inputCity) {
+		return this.checkInput(inputCity) && this.updateCity(inputCity);
 	}
 
+	onOtherCitiesClick(selectedCity) {
+		const newOtherCities = this.state.otherCities.map((city) => city);
+		const selectedIndex = newOtherCities.findIndex((city) => city.cityName === selectedCity);
+		const newData = newOtherCities.splice(selectedIndex, 1, this.state.data)[0];
+
+		this.setState({
+			data : newData,
+			otherCities : newOtherCities
+		});
+	}
+
+	async initialRequest () {
+		this.setState({
+			loading : true
+		});
+		const {country, city} = this.state;
+		const currentData = await getWeather(country, city);
+		const otherCityNameList = ['Sydney', 'Brisbane', 'Perth'];
+		const otherCityList = [];
+		for(let i = 0; i < otherCityNameList.length; i++) {
+			let city = otherCityNameList[i];
+			let otherCityData = await getWeather(country, city);
+			otherCityList.push(otherCityData);
+		}
+		this.setState({
+			data : currentData,
+			loading : false,
+			otherCities : otherCityList
+		});
+	}
+
+	componentDidMount() {
+		this.initialRequest();
+	}
 
 	render () {
-		const {city, data, loading} = this.state;
-		let currentWeather;
-		// let forecastWeather;
-		// let otherCity;
-
-		if(data) {
-			currentWeather = {
-				city : city,
-				...data.current
-			};
-		}
-
+		const loadingStyle = {
+			borderRadius : '32px',
+		};
+		const {data, loading, otherCities} = this.state;
+	
 		return (
 			<div className = 'Weather'>
 				{loading?
-					<div className = 'Current'>
+					<div className = 'Current' style = {loadingStyle}>
 						<div className = 'loading'>
 							Loading...
 						</div>
 					</div>
 				:
-					<Current current = {currentWeather}/>
+					<div>
+						<Current 	current = {data.current}
+									city = {data.cityName}
+									onCityChange = {this.onCityChange}
+									onCountryChange = {this.onCountryChange}
+						/>
+						<WeatherBottom 	cityArray = {otherCities}
+										forecastArray = {data.forecast}
+										onOtherCitiesClick = {this.onOtherCitiesClick}
+						/>
+					</div>
 				}
-				<WeatherBottom cityArray = {otherCity} forecastArray = {forecastWeather}/>
 			</div>
 		);
 	}
