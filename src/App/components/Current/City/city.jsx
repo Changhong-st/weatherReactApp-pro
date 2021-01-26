@@ -1,61 +1,57 @@
-import React from 'react';
-import {Component} from 'react';
+import React, { useState } from 'react';
+import getWeather from '../../../api/getWeather';
+import styles from './city.less';
 
-class CurrentCity extends Component {
-	constructor(props) {
-		super(props);
-		this.defaultValue = 'Which city?';
-		this.state = {
-			cityValue : this.defaultValue,
-		};
-		this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
-		this.handleFocus = this.handleFocus.bind(this);
-		this.handleBlur = this.handleBlur.bind(this);
-	}
+const defaultValue = 'Which city?';
+const CurrentCity = () => {
+	const [city, setCity] = useState(defaultValue);
 
-	updateDisplay(inputValue) {
-		this.setState({
-			cityValue: inputValue
-		});
-	}
+	const handleFocus = () => {
+		if (city === defaultValue) {
+			setCity('');
+		}	
+	};
 
-	handleChange(e) {
-		this.updateDisplay(e.target.value);
-    }
+	const updateData = async(inputCity) => {
+		props.setLoading(true);
+		const newData = await getWeather(props.country, props.inputCity);
+		if(newData === undefined) {
+			props.setLoading(false);
+			return alert('country or city can not found');
+		}
+		props.updateDataArray(newData);
+		props.setLoading(false);
+	};
 
-	handleSubmit(e) {
+	const handleSubmit = (e) => {
 		e.preventDefault();
-		this.props.onCityChange(this.state.cityValue);
-	}
-	
-	handleFocus(e) {
-		if (this.state.cityValue === this.defaultValue) {
-			this.updateDisplay('');
-		}	
-	}
+		const validate = props.checkCityInput(city, props.country);
+		if(validate) {
+			updateData(city);
+		}
+		setCity(defaultValue);
+	};
 
-	handleBlur(e) {
-		if (this.state.cityValue === '') {
-			this.updateDisplay(this.defaultValue);
-		}	
-	}
+	const handleBlur = (e) => {
+		return (city === '') && setCity(defaultValue);
+	};
 
-	render() {
-		return (
-			<div className = 'City'>
-				<h1>{this.props.city}</h1>
-				<form className='City__form' onSubmit={this.handleSubmit}>
-					<input  className='City__form__input'
-							value={this.state.cityValue}
-							onChange={this.handleChange}
-							onFocus={this.handleFocus}
-							onBlur={this.handleBlur}
-					/>
-				</form>
-			</div>
-		);
-	}
+	return (
+		<div className={styles.City}>
+			<h1>{props.city}</h1>
+			<form 
+				className={styles['City__form']} 
+				onSubmit={handleSubmit}
+			>
+				<input className={styles['City__form__input']}
+						value={city}
+						onChange={setCity(e.target.value)}
+						onFocus={handleFocus}
+						onBlur={handleBlur}
+				/>
+			</form>
+		</div>
+	);
 }
 
 export default CurrentCity;

@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import './App.css';
-import Weather from './components/'
-import Current from './components/Current/Current';
-import WeatherBottom from './components/Bottom/Bottom';
+// import Weather from './components/'
+import Current from './components/Current';
+import WeatherBottom from './components/WeatherBottom/Bottom';
 import getWeather from './api/getWeather';
 import {getCode, getName} from 'country-list';
 
