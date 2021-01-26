@@ -1,27 +1,24 @@
 import React from 'react';
-import styles from './ForecastWeather.less'
+import styles from './ForecastWeather.less';
+import ForecastListItem from './forecast-list-item';
 
-const ForecastListItem = (props) => {
-    const iconUrlAddress = `http://openweathermap.org/img/wn/${props.info.icon}@2x.png`;
-    return (
-        <div className={styles['ForecastList__Item']}>
-            <h3 
-                className={styles['ForecastList__Item__day']}
-            >
-                {props.info.day}
-            </h3>
-            <img 
-                className={styles['ForecastList__Item__icon']} 
-                src={iconUrlAddress} 
-                alt={props.info.icon}
-            />
-            <div
-                className={styles['ForecastList__Item__temperature']}
-            >
-                {props.info.temperature} °
-            </div>
-        </div>
-    );
+function ForecastWeather (props) {
+	const forecastList = props.forecastArray.map((forecast) =>
+		<ForecastListItem
+		 	key = {forecast.day} 
+		 	info = {forecast}
+		/>
+	);
+	return (
+		<div className={styles['ForecastWeather']}>
+			<h2 className={styles['ForecastWeather__title']}>
+				Forecast
+			</h2>
+			<div className={styles['ForecastList']}>
+				{forecastList}
+			</div>
+		</div>
+	);
 }
 
 export default ForecastWeather;

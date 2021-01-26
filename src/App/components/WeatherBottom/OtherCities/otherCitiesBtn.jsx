@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+import styles from './otherCities.less'
 class OtherCityButton extends Component {
 
 	handleClick = (e) => {
@@ -11,16 +11,16 @@ class OtherCityButton extends Component {
 		
 		return (
 			<button 
-				className = 'OtherCityButton'
+				className={styles.OtherCityButton}
 				onClick = {this.handleClick}
 			>
-				<h3 className = 'OtherCityButton__city'>
+				<h3 className={styles['OtherCityButton__city']}>
 					{city}
 				</h3>
-				<div className = 'OtherCityButton__temperature'>
+				<div className={styles['OtherCityButton__temperature']}>
 					{Math.round(temperature)} °
 				</div>
-				<div className = 'OtherCityButton__icon'>
+				<div className={styles['OtherCityButton__icon']}>
 					<img src ={`http://openweathermap.org/img/wn/${icon}.png`} alt = {description}/>
 				</div>
 			</button>

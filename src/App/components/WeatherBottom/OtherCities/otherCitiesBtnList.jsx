@@ -1,5 +1,6 @@
 import React from 'react';
 import OtherCityButton from './otherCitiesBtn';
+import styles from './otherCities.less';
 
 function OtherCityBtnList (props) {
 	const {cityArray, onOtherCitiesClick} = props;
@@ -15,7 +16,7 @@ function OtherCityBtnList (props) {
 		/>
 	);
 	return (
-		<div className = 'OtherCityButtons'>
+		<div className={styles.OtherCityButtons}>
 			{buttons}
 		</div>
 	);
