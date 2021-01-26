@@ -1,34 +1,23 @@
-const {Weather} = require('./WeatherClass');
-const axios = require('../../../node_modules/axios');
+import {Weather} from './WeatherClass';
+const axios = require('axios');
 
-let appid =`${process.env.appid}`;      // Fill in API key
-appid = 'e787b14540b854a704b00c7a9dfe1342'; 
+const APPID =`${process.env.REACT_APP_APPID}`;      // Fill in API key
 
 const openWeather = axios.create({
     baseURL: 'http://api.openweathermap.org/data/2.5',
     params: {
-        appid: appid
-    }            
+        appid: APPID,
+    }
 });
 
 function requestWeather (location, weatherType = 'current') {
     const route = (weatherType === 'forecast')? '/forecast':'/weather';
     const response = openWeather.get(route, {
         params: { 
-            q: location,
+            q: location
         }
     });
     return response;
-}
-
-function filterForecast (forecastList) {
-    let forecastFiltered = [];
-    forecastList.forEach((item, index) => {
-        if (index % 8 === 0) {
-            forecastFiltered.push(item);
-        }
-    });
-    return forecastFiltered;
 }
 
 function getWeather (cc, city) {
@@ -37,11 +26,13 @@ function getWeather (cc, city) {
     .then((responseArray) =>{
         const curRes = responseArray[0];
         const forRes = responseArray[1];
-        const forecast = filterForecast(forRes.data.list).map(item => new Weather(item));
-        // const forecast = forRes.data.list.map(item => new Weather(item));
+        const cityName = forRes.data.city.name;
+        const countryCode = forRes.data.city.country;
         const current = new Weather (curRes.data);
-        const data = {current, forecast};
-        console.log(data);
+        const rawForecast = forRes.data.list.map(item => new Weather(item));
+        const filteredForecast = filterRawForecast(rawForecast);
+        const forecast = formatForecast(filteredForecast);
+        const data = {cityName, countryCode, current, forecast};
         return data;
     })
     .catch(err => {
@@ -49,4 +40,32 @@ function getWeather (cc, city) {
     });
 }
 
-export default getWeather; 
+function filterRawForecast (rawForecast) {
+    let filteredForecast = [];
+    rawForecast.forEach((item, index) => {
+        if (index % 8 === 0) {
+            filteredForecast.push(item);
+        }
+    });
+    return filteredForecast;
+}
+
+function formatForecast (filteredForecast, days = 5) {
+	const dayList = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
+	const today = new Date();
+	let currentIndex = today.getDay() - 2;
+	let formattedForecast = [];
+
+	for (let i = 0; i < days; i++) {
+		currentIndex = (currentIndex === dayList.length -1)? 0 : currentIndex + 1;
+		formattedForecast.push({
+			day : dayList[currentIndex],
+			temperature : Math.round(filteredForecast[i].temperature),
+            icon : filteredForecast[i].icon,
+            description : filteredForecast[i].description
+		});
+	}
+	return formattedForecast;
+}
+
+export default getWeather;
