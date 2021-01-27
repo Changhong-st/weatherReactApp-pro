@@ -1,8 +1,8 @@
 import React, {useState, useEffect, useReducer} from 'react';
-import styles from './index.less';
-import Current from '../Current/current';
-import WeatherBottom from '../WeatherBottom/weather-bottom';
-import getWeather from '../../api/get-weather';
+import styles from './index.module.scss';
+import Current from '../Current/index';
+import WeatherBottom from '../WeatherBottom/index';
+import getWeather from '../../api/getWeather';
 
 /* data format									
 data
@@ -25,7 +25,7 @@ const Weather = () => {
 	const [loading, setLoading] = useState(true);
 	const [dataArray, dispatch] = useReducer(updateArray, []);
 	
-	const updateArray = (dataArray, action) => {
+	function updateArray(dataArray, action) {
 		const newDataArray = dataArray.map((city) => city);
 		let currentData;
 		switch(action.type) {
@@ -82,8 +82,8 @@ const Weather = () => {
 
 	useEffect(() => {
 			initialRequest();
-		},[]
-	);
+		},
+		[]);
 
 	const onOtherCitiesClick = (buttonIndex) => {
 		const arrayIndex = buttonIndex + 1;

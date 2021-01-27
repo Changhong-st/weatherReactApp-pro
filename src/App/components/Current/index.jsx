@@ -3,7 +3,7 @@ import {getCode, getName} from 'country-list';
 import Country from './Country/country';
 import CurrentCity from './City/city';
 import CurrentInfo from './Info/info';
-import styles from './index.less';
+import styles from './index.module.scss';
 
 const Current = (props) => {
 	const defaultValue = props.children.currentData.countryCode;

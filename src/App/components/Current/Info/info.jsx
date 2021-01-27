@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './info.less';
+import styles from './info.module.scss';
 
 function CurrentInfo (props) {
 	return (

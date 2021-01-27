@@ -1,6 +1,6 @@
 import React from 'react';
 import OtherCityButton from './otherCitiesBtn';
-import styles from './otherCities.less';
+import styles from './otherCities.module.scss';
 
 function OtherCityBtnList (props) {
 	const {cityArray, onOtherCitiesClick} = props;

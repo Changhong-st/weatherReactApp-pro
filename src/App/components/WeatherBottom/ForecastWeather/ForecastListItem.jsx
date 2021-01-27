@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './ForecastWeather.less'
+import styles from './ForecastWeather.module.scss'
 
 const ForecastListItem = (props) => {
     const iconUrlAddress = `http://openweathermap.org/img/wn/${props.info.icon}@2x.png`;
@@ -24,4 +24,4 @@ const ForecastListItem = (props) => {
     );
 }
 
-export default ForecastWeather;
+export default ForecastListItem;

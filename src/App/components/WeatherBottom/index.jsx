@@ -1,7 +1,7 @@
 import React from 'react';
 import OtherCity from './OtherCities/OtherCities';
 import ForecastWeather from './ForecastWeather/ForecastWeather';
-import styles from './index.less';
+import styles from './index.module.scss';
 
 
 function WeatherBottom (props) {

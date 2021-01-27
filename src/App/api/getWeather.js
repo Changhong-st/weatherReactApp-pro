@@ -1,7 +1,7 @@
 import {Weather} from './WeatherClass';
 const axios = require('axios');
 
-const APPID =`${process.env.REACT_APP_APPID}`;      // Fill in API key
+const APPID =`${process.env.REACT_APP_APPID}`;
 
 const openWeather = axios.create({
     baseURL: 'http://api.openweathermap.org/data/2.5',
@@ -20,7 +20,7 @@ function requestWeather (location, weatherType = 'current') {
     return response;
 }
 
-function getWeather (cc, city) {
+async function getWeather (cc, city) {
     const location = `${city}, ${cc}`;
     return Promise.all([requestWeather(location), requestWeather(location, 'forecast')])
     .then((responseArray) =>{

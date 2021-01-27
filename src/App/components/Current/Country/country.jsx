@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import styles from './country.less';
+import styles from './country.module.scss';
 
 const defaultValue = 'country or code';
 
@@ -17,6 +17,10 @@ const Country = (props) => {
 			setCountry('');
 		}
 	};
+
+	const handleChange = (e) => {
+		setCountry(e.target.value)
+	}
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -45,7 +49,7 @@ const Country = (props) => {
 				>
 					<input  
 						value={country}
-						onChange={setCountry(e.target.value)}
+						onChange={handleChange}
 						onBlur={handleBlur}
 						onFocus={handleFocus}
 					/>

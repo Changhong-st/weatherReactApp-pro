@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import getWeather from '../../../api/getWeather';
-import styles from './city.less';
+import styles from './city.module.scss';
 
 const defaultValue = 'Which city?';
-const CurrentCity = () => {
+const CurrentCity = (props) => {
 	const [city, setCity] = useState(defaultValue);
 
 	const handleFocus = () => {
@@ -14,7 +14,7 @@ const CurrentCity = () => {
 
 	const updateData = async(inputCity) => {
 		props.setLoading(true);
-		const newData = await getWeather(props.country, props.inputCity);
+		const newData = await getWeather(props.country, inputCity);
 		if(newData === undefined) {
 			props.setLoading(false);
 			return alert('country or city can not found');
@@ -32,6 +32,10 @@ const CurrentCity = () => {
 		setCity(defaultValue);
 	};
 
+	const handleChange = (e) => {
+		setCity(e.target.value)
+	}
+
 	const handleBlur = (e) => {
 		return (city === '') && setCity(defaultValue);
 	};
@@ -43,11 +47,12 @@ const CurrentCity = () => {
 				className={styles['City__form']} 
 				onSubmit={handleSubmit}
 			>
-				<input className={styles['City__form__input']}
-						value={city}
-						onChange={setCity(e.target.value)}
-						onFocus={handleFocus}
-						onBlur={handleBlur}
+				<input 
+					className={styles['City__form__input']}
+					value={city}
+					onChange={handleChange}
+					onFocus={handleFocus}
+					onBlur={handleBlur}
 				/>
 			</form>
 		</div>

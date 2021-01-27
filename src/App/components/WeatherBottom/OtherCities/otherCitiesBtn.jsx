@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import styles from './otherCities.less'
+import styles from './otherCities.module.scss'
 class OtherCityButton extends Component {
 
 	handleClick = (e) => {

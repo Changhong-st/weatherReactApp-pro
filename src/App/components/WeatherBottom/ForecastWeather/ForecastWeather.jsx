@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './ForecastWeather.less';
-import ForecastListItem from './forecast-list-item';
+import styles from './ForecastWeather.module.scss';
+import ForecastListItem from './ForecastListItem';
 
 function ForecastWeather (props) {
 	const forecastList = props.forecastArray.map((forecast) =>
