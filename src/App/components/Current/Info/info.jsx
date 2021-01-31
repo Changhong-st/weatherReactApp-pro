@@ -16,8 +16,8 @@ function CurrentInfo (props) {
 					<br/>
 					<span>{props.humidity}%</span>
 				</div>
-				<div className = 'division'></div>
-				<div className = 'CurrentInfo__details__item'>
+				<div className={styles.division} />
+				<div className={styles['CurrentInfo__details__item']}>
 					<span>WIND</span>
 					<br/>
 					<span>{props.wind} K/M</span>

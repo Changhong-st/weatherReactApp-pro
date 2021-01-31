@@ -109,8 +109,8 @@ const Weather = () => {
 	return (
 		<div className={styles.Weather}>
 			{loading?
-				<div className='Current' style={loadingStyle}>
-					<div className='loading'>
+				<div className={styles.Current} style={loadingStyle}>
+					<div className={styles.loading}>
 						Loading...
 					</div>
 				</div>

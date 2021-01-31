@@ -53,7 +53,7 @@ function filterRawForecast (rawForecast) {
 function formatForecast (filteredForecast, days = 5) {
 	const dayList = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
 	const today = new Date();
-	let currentIndex = today.getDay() - 2;
+	let currentIndex = today.getDay() - 1;
 	let formattedForecast = [];
 
 	for (let i = 0; i < days; i++) {
