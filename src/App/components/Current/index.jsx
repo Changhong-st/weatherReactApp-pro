@@ -6,7 +6,7 @@ import CurrentInfo from './Info/info';
 import styles from './index.module.scss';
 
 const Current = (props) => {
-	const defaultValue = props.children.currentData.countryCode;
+	const defaultValue = props?.children?.currentData?.countryCode;
 	const [countryCode, setCountryCode] = useState(defaultValue);
 
 	useEffect(() => {

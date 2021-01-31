@@ -7,7 +7,7 @@ import styles from './index.module.scss';
 function WeatherBottom (props) {
 	const {dataArray, onOtherCitiesClick} = props.children;
 	const cityArray = dataArray.slice(1);
-	const forecastArray = dataArray[0].forecast;
+	const forecastArray = dataArray[0]?.forecast;
 	
 	return (
 		<div className={styles.WeatherBottom}>

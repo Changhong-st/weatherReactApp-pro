@@ -7,10 +7,10 @@ function OtherCityBtnList (props) {
 	const buttons = cityArray.map((city, index) => 
 		<OtherCityButton    
 			key = {`${city.countryCode}${city.cityName}`}
-			city = {city.cityName}
-			temperature = {city.current.temperature}
-			icon = {city.current.icon}
-			description = {city.current.description}
+			city = {city?.cityName}
+			temperature = {city?.current?.temperature}
+			icon = {city?.current?.icon}
+			description = {city?.current?.description}
 			onOtherCitiesClick = {onOtherCitiesClick}
 			index = {index}  
 		/>

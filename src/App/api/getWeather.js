@@ -42,11 +42,11 @@ async function getWeather (cc, city) {
 
 function filterRawForecast (rawForecast) {
     let filteredForecast = [];
-    rawForecast.forEach((item, index) => {
-        if (index % 8 === 0) {
-            filteredForecast.push(item);
+    rawForecast.reduce((_, cur, index) => {
+        if (index % 8 === 0){
+            return filteredForecast.push(cur)
         }
-    });
+    }, 0)
     return filteredForecast;
 }
 
