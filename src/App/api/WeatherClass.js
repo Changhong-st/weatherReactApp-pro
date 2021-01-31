@@ -10,7 +10,16 @@ class Weather {
         this.description = data.weather[0].description;
     }
 }
+class Forecast {
+	constructor(data, day) {
+		this.day = day;
+		this.temperature = Math.round(data.temperature);
+		this.icon = data.icon;
+		this.description = data.description;
+	}
+}
 
 module.exports = {
-    Weather
+    Weather,
+    Forecast
 } 

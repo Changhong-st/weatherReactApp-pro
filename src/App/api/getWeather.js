@@ -1,4 +1,4 @@
-import {Weather} from './WeatherClass';
+import { Weather, Forecast } from './WeatherClass';
 const axios = require('axios');
 
 const APPID =`${process.env.REACT_APP_APPID}`;
@@ -58,12 +58,7 @@ function formatForecast (filteredForecast, days = 5) {
 
 	for (let i = 0; i < days; i++) {
 		currentIndex = (currentIndex === dayList.length -1)? 0 : currentIndex + 1;
-		formattedForecast.push({
-			day : dayList[currentIndex],
-			temperature : Math.round(filteredForecast[i].temperature),
-            icon : filteredForecast[i].icon,
-            description : filteredForecast[i].description
-		});
+        formattedForecast.push(new Forecast(filteredForecast[i], dayList[currentIndex]));
 	}
 	return formattedForecast;
 }
