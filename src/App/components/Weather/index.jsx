@@ -23,7 +23,7 @@ const Weather = () => {
 	const [dataArray, dispatch] = useReducer(updateArray, []);
 	
 	function updateArray(dataArray, action) {
-		const newDataArray = dataArray.map((city) => city);
+		const newDataArray = dataArray?.map((city) => city);
 		let currentData;
 		switch(action.type) {
 			case 'New_Array':
@@ -90,8 +90,8 @@ const Weather = () => {
 
 	const checkCityInput = (inputCity, inputCountry) => {
 		const arrayIndex = dataArray.findIndex((data) => {
-			return (data.cityName.toUpperCase() === inputCity.toUpperCase()) &&
-					(data.countryCode === inputCountry);
+			return (data?.cityName?.toUpperCase() === inputCity?.toUpperCase()) &&
+					(data?.countryCode === inputCountry);
 		});
 		if(arrayIndex > 0) {
 			const buttonIndex = arrayIndex - 1;

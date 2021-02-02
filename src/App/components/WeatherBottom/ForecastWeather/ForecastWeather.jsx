@@ -2,8 +2,8 @@ import React from 'react';
 import styles from './ForecastWeather.module.scss';
 import ForecastListItem from './ForecastListItem';
 
-function ForecastWeather (props) {
-	const forecastList = props.forecastArray.map((forecast) =>
+function ForecastWeather ({forecastArray}) {
+	const forecastList = forecastArray?.map((forecast) =>
 		<ForecastListItem
 		 	key = {forecast.day} 
 		 	info = {forecast}

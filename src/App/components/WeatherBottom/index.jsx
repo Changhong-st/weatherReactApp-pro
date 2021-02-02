@@ -15,7 +15,7 @@ function WeatherBottom ({ dataArray, onOtherCitiesClick }) {
 				onOtherCitiesClick={onOtherCitiesClick}
 			/>
 			<div className={styles.division} />
-			<ForecastWeather forecastArray = {forecastArray}/>
+			<ForecastWeather forecastArray={forecastArray}/>
 		</div>
 	);
 }
