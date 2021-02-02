@@ -80,7 +80,8 @@ const Weather = () => {
 	useEffect(() => {
 			initialRequest();
 		},
-		[]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	[]);
 
 	const onOtherCitiesClick = (buttonIndex) => {
 		const arrayIndex = buttonIndex + 1;

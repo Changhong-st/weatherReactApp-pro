@@ -46,6 +46,7 @@ function filterRawForecast (rawForecast) {
         if (index % 8 === 0){
             return filteredForecast.push(cur)
         }
+        return filteredForecast;
     }, 0)
     return filteredForecast;
 }
