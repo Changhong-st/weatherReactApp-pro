@@ -3,7 +3,7 @@ import getWeather from '../../../api/getWeather';
 import styles from './city.module.scss';
 
 const defaultValue = 'Which city?';
-const CurrentCity = (props) => {
+const CurrentCity = ({cityName, country, checkCityInput, setLoading, updateDataArray}) => {
 	const [city, setCity] = useState(defaultValue);
 
 	const handleFocus = () => {
@@ -13,19 +13,19 @@ const CurrentCity = (props) => {
 	};
 
 	const updateData = async(inputCity) => {
-		props.setLoading(true);
-		const newData = await getWeather(props.country, inputCity);
+		setLoading(true);
+		const newData = await getWeather(country, inputCity);
 		if(newData === undefined) {
-			props.setLoading(false);
+			setLoading(false);
 			return alert('country or city can not found');
 		}
-		props.updateDataArray(newData);
-		props.setLoading(false);
+		updateDataArray(newData);
+		setLoading(false);
 	};
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		const validate = props.checkCityInput(city, props.country);
+		const validate = checkCityInput(city, country);
 		if(validate) {
 			updateData(city);
 		}
@@ -36,13 +36,13 @@ const CurrentCity = (props) => {
 		setCity(e.target.value)
 	}
 
-	const handleBlur = (e) => {
+	const handleBlur = () => {
 		return (city === '') && setCity(defaultValue);
 	};
 
 	return (
 		<div className={styles.City}>
-			<h1>{props.city}</h1>
+			<h1>{cityName}</h1>
 			<form 
 				className={styles['City__form']} 
 				onSubmit={handleSubmit}

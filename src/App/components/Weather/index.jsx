@@ -17,9 +17,6 @@ data
 	- forecast[0]-[4] (same a current)
 	- countryCode 
 */
-const loadingStyle = {
-  borderRadius : '32px',
-};
 
 const Weather = () => {
 	const [loading, setLoading] = useState(true);
@@ -109,32 +106,25 @@ const Weather = () => {
 	return (
 		<div className={styles.Weather}>
 			{loading?
-				<div className={styles.Current} style={loadingStyle}>
+				<div className={styles.Current} style={{
+					borderRadius : '32px',
+				}}>
 					<div className={styles.loading}>
 						Loading...
 					</div>
 				</div>
 			:
 				<>
-					<Current>
-						{
-							{
-								currentData,
-								setLoading,
-								checkCityInput,
-								updateDataArray: newData
-							}
-						}
-					</Current>
-					<WeatherBottom>
-						{
-							{
-								dataArray,
-								onOtherCitiesClick
-							}
-							
-						}
-					</WeatherBottom>
+					<Current
+						currentData={currentData}
+						setLoading={setLoading}
+						checkCityInput={() => checkCityInput}
+						updateDataArray={newData}
+					/>
+					<WeatherBottom
+						dataArray={dataArray}
+						onOtherCitiesClick={onOtherCitiesClick}
+					/>
 				</>
 			}
 		</div>

@@ -5,8 +5,8 @@ import CurrentCity from './City/city';
 import CurrentInfo from './Info/info';
 import styles from './index.module.scss';
 
-const Current = (props) => {
-	const defaultValue = props?.children?.currentData?.countryCode;
+const Current = ({currentData, setLoading, checkCityInput, updateDataArray}) => {
+	const defaultValue = currentData?.countryCode;
 	const [countryCode, setCountryCode] = useState(defaultValue);
 
 	useEffect(() => {
@@ -28,7 +28,6 @@ const Current = (props) => {
 		return inputCode && setCountryCode(inputCode.toUpperCase());
 	}
 
-	const {currentData, setLoading, checkCityInput, updateDataArray} = props.children;
 	const {cityName, current} = currentData;
 	const {temperature, humidity, wind, weather} = current;
 
@@ -45,7 +44,7 @@ const Current = (props) => {
 				weather={weather}		
 			/>
 			<CurrentCity 	
-				city={cityName}
+				cityName={cityName}
 				country={countryCode}
 				checkCityInput={checkCityInput}
 				setLoading={setLoading}
