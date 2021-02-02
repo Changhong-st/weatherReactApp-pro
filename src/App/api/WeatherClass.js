@@ -9,7 +9,7 @@ class Weather {
         this.icon = data.weather[0].icon;
         this.description = data.weather[0].description;
     }
-}
+};
 class Forecast {
 	constructor(data, day) {
 		this.day = day;
@@ -17,9 +17,9 @@ class Forecast {
 		this.icon = data.icon;
 		this.description = data.description;
 	}
-}
+};
 
-module.exports = {
+export {
     Weather,
     Forecast
-} 
+};
