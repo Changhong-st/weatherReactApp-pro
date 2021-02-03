@@ -18,9 +18,10 @@
   },
   "homepage": "https://changhong-st.github.io/weatherReactApp-pro",
   "scripts": {
-    "predeploy": "npm run build",
+    "heroku-postbuild": "npm run build",
     "deploy": "gh-pages -d build",
-    "start": "react-scripts start",
+    "dev": "react-scripts start",
+    "start": "serve -s build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
