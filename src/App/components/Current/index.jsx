@@ -27,7 +27,6 @@ const Current = ({currentData, setLoading, checkCityInput, updateDataArray}) => 
 		const inputCode = getCountryCode(inputCountry);
 		return inputCode && setCountryCode(inputCode.toUpperCase());
 	}
-	console.log(currentData, 'currentData')
 
 	const {cityName, current} = currentData;
 	const {temperature, humidity, wind, weather} = current;

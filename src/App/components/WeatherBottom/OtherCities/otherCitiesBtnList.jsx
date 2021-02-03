@@ -3,7 +3,6 @@ import OtherCityButton from './otherCitiesBtn';
 import styles from './otherCities.module.scss';
 
 function OtherCityBtnList ({cityArray, onOtherCitiesClick}) {
-	console.log(cityArray, 'cityArray')
 	const buttons = cityArray?.map((city, index) => 
 		<OtherCityButton    
 			key = {`${city.countryCode}${city.cityName}`}
